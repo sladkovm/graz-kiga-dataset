@@ -1,2 +1,5 @@
 .ipynb_checkpoints/
 .vscode/
+.tox/
+__pycache__/
+etl.egg-info/
