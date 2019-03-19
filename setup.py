@@ -8,4 +8,5 @@ setup(name='etl',
       author_email='sladkovm@gmail.com',
       license='MIT',
       py_modules=['etl'],
+      install_requires=['bonobo', 'requests_html'],
       zip_safe=False)
