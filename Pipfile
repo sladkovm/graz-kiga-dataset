@@ -11,6 +11,7 @@ pytest = "*"
 requests-html = "*"
 jupyter = "*"
 bonobo = "*"
+loguru = "*"
 
 [requires]
 python_version = "3.6"
