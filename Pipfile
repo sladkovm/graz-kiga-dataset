@@ -12,6 +12,7 @@ requests-html = "*"
 jupyter = "*"
 bonobo = "*"
 loguru = "*"
+geopy = "*"
 
 [requires]
 python_version = "3.6"

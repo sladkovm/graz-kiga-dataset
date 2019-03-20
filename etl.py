@@ -4,6 +4,7 @@ import re
 import os
 from pprint import pprint
 from loguru import logger
+from geopy.geocoders import Nominatim
 
 
 URL_KRIPPE_STAD = 'https://www.graz.at/cms/beitrag/10237730/7745079/Staedtische_Kinderkrippen.html'
@@ -16,6 +17,9 @@ KEYS = {
     'STAD': ['district', 'name', 'address', 'tel', 'n_groups', 'time', 'more'],
     'PRIVAT': ['district', 'name', 'address', 'tel', 'time']
 }
+
+
+geolocator = Nominatim(user_agent="Kiga Graz")
 
 
 def extract():
@@ -60,6 +64,17 @@ def extract_gt(d):
         d.update({'GT': n_gt(d['n_groups'])})
     yield d
     
+
+def location(d):
+    address = d.get('address')
+    logger.debug(address)
+    loc = geolocator.geocode(address)
+    logger.debug(loc)
+    if loc is not None:
+        d.update({'location': loc.raw})
+    else:
+        d.update({'location': None})
+    return d
     
 # Helper functions
 
@@ -85,6 +100,7 @@ def get_graph():
                     split_lines,
                     jsonify,
                     extract_gt,
+                    location,
                     bonobo.JsonWriter(etl_fname))
     return graph
 
