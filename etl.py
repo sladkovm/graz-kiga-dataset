@@ -90,11 +90,21 @@ def get_graph():
 
 
 def main():
+
+    # Run krippe privat
+    os.environ['ETL_KEYS'] = 'PRIVAT'
     os.environ['ETL_URL'] = URL_KRIPPE_PRIVAT
     os.environ['ETL_FNAME'] = FILE_KRIPPE_PRIVAT
-    os.environ['ETL_KEYS'] = 'PRIVAT'
     graph = get_graph()
     bonobo.run(graph)
+
+    # Run krippe stad
+    os.environ['ETL_KEYS'] = 'STAD'
+    os.environ['ETL_URL'] = URL_KRIPPE_STAD
+    os.environ['ETL_FNAME'] = FILE_KRIPPE_STAD
+    graph = get_graph()
+    bonobo.run(graph)
+
 
 
 if __name__ == "__main__":
