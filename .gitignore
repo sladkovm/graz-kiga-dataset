@@ -3,3 +3,5 @@
 .tox/
 __pycache__/
 etl.egg-info/
+
+.env

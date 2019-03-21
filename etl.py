@@ -72,6 +72,8 @@ def location(d):
     logger.debug(loc)
     if loc is not None:
         d.update({'location': loc.raw})
+        d.update({'lat': loc.latitude})
+        d.update({'lon': loc.longitude})
     else:
         d.update({'location': None})
     return d

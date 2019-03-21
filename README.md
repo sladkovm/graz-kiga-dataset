@@ -14,7 +14,8 @@
  "address": "Sch\u00f6nbrunngasse 30, 8043 Graz", 
  "tel": "Tel.: +43 316 872-2780", 
  "n_groups": "Anzahl der Gruppen: 5 GT", 
- "time": "\u00d6ffnungszeiten: Montag bis Freitag von 07.00 bis 17.00 Uhr", "more": "Mehr Infos", 
+ "time": "\u00d6ffnungszeiten: Montag bis Freitag von 07.00 bis 17.00 Uhr", 
+ "more": "Mehr Infos", 
  "GT": 5, 
  "location": {
      "place_id": 27361661,
@@ -36,4 +37,4 @@
 ## Important dependencies
 
 1. *bonobo* 
-2. *Google API*
+2. *geopy*
