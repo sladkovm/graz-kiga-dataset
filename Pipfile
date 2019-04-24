@@ -16,6 +16,7 @@ geopy = "*"
 pandas = "*"
 python-dotenv = "*"
 plotly = "*"
+jsonschema = "*"
 
 [requires]
 python_version = "3.6"
