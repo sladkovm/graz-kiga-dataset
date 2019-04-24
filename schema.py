@@ -15,6 +15,8 @@ schema = {
             "time": {"type": "string"},
             "more": {"type": "string"},
             "GT": {"type": "number"},
+            "lat": {"type": "number"},
+            "lon": {"type": "number"},
             "location": {"type": ["object", "null"]},
         },
     }
@@ -27,5 +29,9 @@ if __name__ == "__main__":
         validate(kp, schema)
 
     with open('krippe_stad.json') as f:
+        ks = json.load(f)
+        validate(ks, schema)
+
+    with open('landmarks.json') as f:
         ks = json.load(f)
         validate(ks, schema)
