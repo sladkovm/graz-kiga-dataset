@@ -1,0 +1,149 @@
+[
+    {
+        "name": "Hauptplatz",
+        "address": "Hauptplatz 1, 8010 Graz",
+        "location": {
+            "place_id": 1383481,
+            "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 317096251,
+            "boundingbox": [
+                "47.0703798",
+                "47.0704798",
+                "15.4381852",
+                "15.4382852"
+            ],
+            "lat": "47.0704298",
+            "lon": "15.4382352",
+            "display_name": "Steierm\u00e4rkische Bank, 1, Hauptplatz, Innere Stadt, Graz, Steiermark, 8010, \u00d6sterreich",
+            "class": "amenity",
+            "type": "bank",
+            "importance": 0.44100000000000006,
+            "icon": "https://nominatim.openstreetmap.org/images/mapicons/money_bank2.p.20.png"
+        },
+        "lat": 47.0704298,
+        "lon": 15.4382352
+    },
+    {
+        "name": "HBHF",
+        "address": "hauptbahnhof, Graz",
+        "location": {
+            "place_id": 99709931,
+            "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 108701087,
+            "boundingbox": [
+                "47.0726649",
+                "47.0727493",
+                "15.4177248",
+                "15.4181864"
+            ],
+            "lat": "47.0727475",
+            "lon": "15.4181763",
+            "display_name": "Hauptbahnhof, Lend, Graz, Steiermark, 8020, \u00d6sterreich",
+            "class": "highway",
+            "type": "platform",
+            "importance": 0.31000000000000005
+        },
+        "lat": 47.0727475,
+        "lon": 15.4181763
+    },
+    {
+        "name": "Uni Graz",
+        "address": "Universit\u00e4tsplatz 3, 8010 Graz",
+        "location": {
+            "place_id": 198063893,
+            "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+            "osm_type": "relation",
+            "osm_id": 476,
+            "boundingbox": [
+                "47.0772178",
+                "47.0782665",
+                "15.4491313",
+                "15.4506123"
+            ],
+            "lat": "47.0777836",
+            "lon": "15.4494234560134",
+            "display_name": "Karl-Franzens-Universit\u00e4t Hauptgeb\u00e4ude, 3, Universit\u00e4tsplatz, Geidorf, Graz, Steiermark, 8010, \u00d6sterreich",
+            "class": "amenity",
+            "type": "university",
+            "importance": 0.44100000000000006,
+            "icon": "https://nominatim.openstreetmap.org/images/mapicons/education_university.p.20.png"
+        },
+        "lat": 47.0777836,
+        "lon": 15.4494234560134
+    },
+    {
+        "name": "TU Graz",
+        "address": "Rechbauerstra\u00dfe 12, 8010 Graz",
+        "location": {
+            "place_id": 57791927,
+            "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 4679922716,
+            "boundingbox": [
+                "47.0686732",
+                "47.0687732",
+                "15.4504043",
+                "15.4505043"
+            ],
+            "lat": "47.0687232",
+            "lon": "15.4504543",
+            "display_name": "Printservice der TU Graz, 12, Rechbauerstra\u00dfe, Sankt Leonhard, Graz, Steiermark, 8010, \u00d6sterreich",
+            "class": "shop",
+            "type": "copyshop",
+            "importance": 0.44100000000000006
+        },
+        "lat": 47.0687232,
+        "lon": 15.4504543
+    },
+    {
+        "name": "TU Know Center",
+        "address": "Inffeldgasse 13, 8010 Graz",
+        "location": {
+            "place_id": 91302961,
+            "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+            "osm_type": "way",
+            "osm_id": 66363148,
+            "boundingbox": [
+                "47.0589975",
+                "47.0594155",
+                "15.4629802",
+                "15.4635904"
+            ],
+            "lat": "47.05918325",
+            "lon": "15.4633063948165",
+            "display_name": "Produktionstechnikzentrum, 13, Inffeldgasse, Harmsdorf, Jakomini, Graz, Steiermark, 8010, \u00d6sterreich",
+            "class": "amenity",
+            "type": "university",
+            "importance": 0.44100000000000006,
+            "icon": "https://nominatim.openstreetmap.org/images/mapicons/education_university.p.20.png"
+        },
+        "lat": 47.05918325,
+        "lon": 15.4633063948165
+    },
+    {
+        "name": "LKH Graz",
+        "address": "Auenbruggerplatz 1, 8036 Graz",
+        "location": {
+            "place_id": 24214416,
+            "licence": "Data \u00a9 OpenStreetMap contributors, ODbL 1.0. https://osm.org/copyright",
+            "osm_type": "node",
+            "osm_id": 2383177547,
+            "boundingbox": [
+                "47.0794039",
+                "47.0795039",
+                "15.4657207",
+                "15.4658207"
+            ],
+            "lat": "47.0794539",
+            "lon": "15.4657707",
+            "display_name": "1, Auenbruggerplatz, Geidorf, Graz, Steiermark, 8036, \u00d6sterreich",
+            "class": "amenity",
+            "type": "waste_basket",
+            "importance": 0.44100000000000006
+        },
+        "lat": 47.0794539,
+        "lon": 15.4657707
+    }
+]

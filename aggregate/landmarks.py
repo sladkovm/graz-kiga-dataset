@@ -42,5 +42,5 @@ if __name__ == "__main__":
         ouput.append(_)
 
 
-    with open('landmarks.json', 'w') as f:
+    with open('data/landmarks.json', 'w') as f:
         json.dump(ouput, f)
