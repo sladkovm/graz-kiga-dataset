@@ -6,3 +6,4 @@ numpy
 gunicorn>=19.7.1
 pandas
 python-dotenv
+geopy

@@ -7,7 +7,7 @@ from config import config_app
 from layout import app_layout, make_header, make_main
 from plots import bar_plot, scatter_plot
 import sys
-from kiga_map import map_plot
+from kiga_map import map_plot, distance
 
 server = Flask(__name__)
 

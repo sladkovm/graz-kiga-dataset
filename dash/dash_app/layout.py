@@ -1,6 +1,7 @@
 import dash_core_components as dcc
 import dash_html_components as html
 from style import colors
+from kiga_map import distance
 
 
 def app_layout(header=None, main=None, footer=None):
@@ -67,9 +68,14 @@ def make_main(plot=html.Div()):
     rv = html.Div(
         style={'backgroundColor': colors['background']},
         children=[
-            dcc.Graph(
-                id='fig',
-                figure=plot
+            html.Div(id='page-content',
+                className='row no-gutters',
+                children=[
+                    html.Div(distance(),
+                        id='page-left', className='col-sm no-gutters'),
+                    html.Div(dcc.Graph(id='fig', figure=plot),
+                        id='page-right', className='col-sm no-gutters')
+                ]
             )
         ]
     )

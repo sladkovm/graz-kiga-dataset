@@ -15,6 +15,7 @@ gunicorn = ">=19.7.1"
 numpy = "*"
 pandas = "*"
 python-dotenv = "*"
+geopy = "*"
 
 [requires]
 python_version = "3.6"
