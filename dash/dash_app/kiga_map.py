@@ -29,25 +29,32 @@ df_landmarks = pd.DataFrame(landmarks)
 def distance(home=geocoder.geocode("Grabenstrasse 45, 8010 Graz")):
     df = pd.concat([df_stad, df_privat], sort=False)
     df = df[['name', 'address', 'lat', 'lon']].dropna()
-    df['distance'] = df.apply(lambda x: np.round(geodesic((x.lat, x.lon), (home.latitude, home.longitude)).km, 2), axis=1)
-    df.sort_values(by='distance', inplace=True)
-    df = df[['name', 'address', 'distance']]
+    df['km'] = df.apply(lambda x: np.round(geodesic((x.lat, x.lon), (home.latitude, home.longitude)).km, 2), axis=1)
+    df.sort_values(by='km', inplace=True)
+    df = df[['name', 'address', 'km']]
     rv = dash_table.DataTable(
         id='table',
+        row_selectable="single",
         columns=[{"name": i, "id": i} for i in df.columns],
         data=df.to_dict("rows"),
         style_table={
-            'maxHeight': '700',
+            'textAlign': 'left',
+            'maxHeight': '700px',
             'overflowY': 'scroll'
         },  
         style_cell_conditional=[
             {'if': {'column_id': 'name'},
-            'maxWidth': '100px'},
+            'maxWidth': '150px', 'textAlign': 'left',},
             {'if': {'column_id': 'address'},
-            'maxWidth': '150px'},
-            {'if': {'column_id': 'distance'},
-            'maxWidth': '30px'}
-        ]   
+            'maxWidth': '150px', 'textAlign': 'right',},
+            {'if': {'column_id': 'km'},
+            'maxWidth': '25px', 'textAlign': 'right',}
+        ]   ,
+        style_as_list_view=True,
+        style_header={
+        'backgroundColor': 'white',
+        'fontWeight': 'bold'
+    },
     )
     return rv
 
