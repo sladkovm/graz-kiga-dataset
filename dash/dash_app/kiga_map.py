@@ -26,7 +26,8 @@ df_privat = pd.DataFrame(krippe_privat)
 df_landmarks = pd.DataFrame(landmarks)
 
 
-def distance(home=geocoder.geocode("Grabenstrasse 45, 8010 Graz")):
+def distance(address="Hasnerplatz 1, 8010 Graz"):
+    home = geocoder.geocode(address)
     df = pd.concat([df_stad, df_privat], sort=False)
     df = df[['name', 'address', 'lat', 'lon']].dropna()
     df['km'] = df.apply(lambda x: np.round(geodesic((x.lat, x.lon), (home.latitude, home.longitude)).km, 2), axis=1)
