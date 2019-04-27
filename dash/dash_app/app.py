@@ -2,7 +2,7 @@ from flask import Flask
 import dash
 import dash_core_components as dcc
 import dash_html_components as html
-from dash.dependencies import Input, Output
+from dash.dependencies import Input, Output, State
 from config import config_app
 from layout import app_layout, make_header, make_main
 from plots import bar_plot, scatter_plot
@@ -44,6 +44,11 @@ def routing(pathname):
 
     return rv
 
+
+@app.callback(Output('address-text', 'children'), [Input('submit', 'n_clicks')],
+    [State('address', 'value')])
+def address(_, address):
+    return address
 
 if __name__ == '__main__':
 

@@ -78,11 +78,13 @@ def make_main(plot=html.Div()):
                                 html.Span(className='input-group-text', children=['Address']),
                                 dcc.Input(id='address',
                                     className='form-control',
-                                    style={'width': 550},
+                                    style={'width': 475},
                                     value='Hasnerplatz 1, 8010 Graz',
                                     type='text'),
+                                html.Button('Submit', id='submit', className='btn btn-primary')
                             ])
-                        ]),    
+                        ]),
+                        html.Div(id='address-text'),
                         distance()
                         ],
                         id='page-left', className='col-sm no-gutters'),
