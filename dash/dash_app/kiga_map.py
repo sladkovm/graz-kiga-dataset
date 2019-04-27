@@ -28,6 +28,8 @@ df_landmarks = pd.DataFrame(landmarks)
 
 def distance(address="Hasnerplatz 1, 8010 Graz"):
     home = geocoder.geocode(address)
+    if home is None:
+        return None
     df = pd.concat([df_stad, df_privat], sort=False)
     df = df[['name', 'address', 'lat', 'lon']].dropna()
     df['km'] = df.apply(lambda x: np.round(geodesic((x.lat, x.lon), (home.latitude, home.longitude)).km, 2), axis=1)
@@ -40,7 +42,7 @@ def distance(address="Hasnerplatz 1, 8010 Graz"):
         data=df.to_dict("rows"),
         style_table={
             'textAlign': 'left',
-            'maxHeight': '700px',
+            'maxHeight': '600px',
             'overflowY': 'scroll'
         },  
         style_cell_conditional=[
@@ -60,72 +62,91 @@ def distance(address="Hasnerplatz 1, 8010 Graz"):
     return rv
 
 
-data = [
-    go.Scattermapbox(
-        name='Stadt',
-        lat=df_stad.lat,
-        lon=df_stad.lon,
-        mode='markers',
-        marker=go.scattermapbox.Marker(
-            size=df_stad.GT*5,
-            color='green'
+
+
+def map_plot(address="Hasnerplatz 1, 8010 Graz"):
+    home = geocoder.geocode(address)
+
+    data = [
+        go.Scattermapbox(
+            name='Stadt',
+            lat=df_stad.lat,
+            lon=df_stad.lon,
+            mode='markers',
+            marker=go.scattermapbox.Marker(
+                size=df_stad.GT*5,
+                color='green'
+            ),
+            text=df_stad.name,
+        ), 
+        
+        go.Scattermapbox(
+            name='Privat',
+            lat=df_privat.lat,
+            lon=df_privat.lon,
+            mode='markers',
+            marker=go.scattermapbox.Marker(
+                size=10,
+                color='blue'
+            ),
+            text=df_privat.name,
         ),
-        text=df_stad.name,
-    ), 
-    
-    go.Scattermapbox(
-        name='Privat',
-        lat=df_privat.lat,
-        lon=df_privat.lon,
-        mode='markers',
-        marker=go.scattermapbox.Marker(
-            size=10,
-            color='blue'
+        
+        go.Scattermapbox(
+            name='Landmarks',
+            lat=df_landmarks.lat,
+            lon=df_landmarks.lon,
+            mode='markers+text',
+            textposition="bottom center",
+            marker=go.scattermapbox.Marker(
+                size=10,
+                color='red'
+            ),
+            text=df_landmarks.name,
+            textfont=dict(color='red')
         ),
-        text=df_privat.name,
-    ),
-    
-    go.Scattermapbox(
-        name='Landmarks',
-        lat=df_landmarks.lat,
-        lon=df_landmarks.lon,
-        mode='markers+text',
-        textposition="bottom center",
-        marker=go.scattermapbox.Marker(
-            size=10,
-            color='red'
+
+        go.Scattermapbox(
+            name='Home',
+            lat=[home.latitude],
+            lon=[home.longitude],
+            mode='markers+text',
+            textposition="bottom center",
+            marker=go.scattermapbox.Marker(
+                size=10,
+                color='orange'
+            ),
+            text=['Home'],
+            textfont=dict(color='orange')
+        )
+
+    ]
+
+
+
+    layout = go.Layout(
+        autosize=True,
+        width=600,
+        height=650,
+        margin=go.layout.Margin(
+            l=50,
+            r=0,
+            b=0,
+            t=0,
+            pad=4
         ),
-        text=df_landmarks.name,
-        textfont=dict(color='red')
+        legend=dict(orientation="h", x=0, y=0),
+        hovermode='closest',
+        mapbox=go.layout.Mapbox(
+            accesstoken=mapbox_access_token,
+            bearing=0,
+            center=go.layout.mapbox.Center(
+                lat=df_landmarks.loc[0].lat,
+                lon=df_landmarks.loc[0].lon
+            ),
+            pitch=0,
+            zoom=12
+        )
     )
-]
 
-
-
-layout = go.Layout(
-    autosize=True,
-    width=600,
-    height=700,
-    margin=go.layout.Margin(
-        l=50,
-        r=0,
-        b=0,
-        t=0,
-        pad=4
-    ),
-    legend=dict(orientation="h", x=0, y=0),
-    hovermode='closest',
-    mapbox=go.layout.Mapbox(
-        accesstoken=mapbox_access_token,
-        bearing=0,
-        center=go.layout.mapbox.Center(
-            lat=df_landmarks.loc[0].lat,
-            lon=df_landmarks.loc[0].lon
-        ),
-        pitch=0,
-        zoom=12
-    )
-)
-
-map_plot = dict(data=data, layout=layout)
-# iplot(fig, filename='Kiderkrippe Graz')
+    return dict(data=data, layout=layout)

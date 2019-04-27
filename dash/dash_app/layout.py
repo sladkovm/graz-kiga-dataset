@@ -4,7 +4,23 @@ from style import colors
 from kiga_map import distance
 
 
-def app_layout(header=None, main=None, footer=None):
+
+def address():
+    return html.Div(className='input-group mb3', children=[
+                            html.Div(className='input-group-prepend',
+                            children=[
+                                html.Span(className='input-group-text', children=['Address']),
+                                dcc.Input(id='address',
+                                    className='form-control',
+                                    style={'width': 475},
+                                    value='Hasnerplatz 1, 8010 Graz',
+                                    type='text'),
+                                html.Button('Submit', id='submit', className='btn btn-primary')
+                            ])
+                        ])
+
+
+def app_layout(header=None, main=address(), footer=None):
     """Returns app layout with the following elements:
         app-layout: main div, should not be a target of an ouput callback
         page-content: container div, target for an ouput callback
@@ -72,20 +88,8 @@ def make_main(plot=html.Div()):
                 className='row no-gutters',
                 children=[
                     html.Div(children=[
-                        html.Div(className='input-group mb3', children=[
-                            html.Div(className='input-group-prepend',
-                            children=[
-                                html.Span(className='input-group-text', children=['Address']),
-                                dcc.Input(id='address',
-                                    className='form-control',
-                                    style={'width': 475},
-                                    value='Hasnerplatz 1, 8010 Graz',
-                                    type='text'),
-                                html.Button('Submit', id='submit', className='btn btn-primary')
-                            ])
-                        ]),
-                        html.Div(id='address-text'),
-                        distance()
+                        address(),
+                        html.Div(distance(), id='sorted-table')
                         ],
                         id='page-left', className='col-sm no-gutters'),
                     html.Div(dcc.Graph(id='fig', figure=plot),

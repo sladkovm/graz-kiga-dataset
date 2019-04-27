@@ -25,8 +25,9 @@ app = config_app(app, debug=True)
 app.layout = app_layout(header=make_header())
 
 
-@app.callback(Output('page-main', 'children'), [Input('url', 'pathname')])
-def routing(pathname):
+@app.callback(Output('page-main', 'children'),
+    [Input('url', 'pathname')], [State('address', 'value')])
+def routing(pathname, address):
     """Very basic router
 
     This callback function will read the current url
@@ -38,17 +39,20 @@ def routing(pathname):
     app.server.logger.debug(f"pathname is {pathname}")
 
     if pathname == '/krippe':
-        rv = make_main(map_plot)
+        rv = make_main(map_plot(address))
     else:
-        rv = make_main(map_plot)
+        rv = make_main(map_plot(address))
 
     return rv
 
 
-@app.callback(Output('address-text', 'children'), [Input('submit', 'n_clicks')],
+@app.callback(Output('sorted-table', 'children'), [Input('submit', 'n_clicks')],
     [State('address', 'value')])
 def address(_, address):
-    return address
+    table = distance(address)
+    if table is None:
+        return html.Div('Address is wrong')
+    return table
 
 if __name__ == '__main__':
 
