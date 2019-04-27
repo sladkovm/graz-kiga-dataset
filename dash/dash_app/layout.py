@@ -71,7 +71,20 @@ def make_main(plot=html.Div()):
             html.Div(id='page-content',
                 className='row no-gutters',
                 children=[
-                    html.Div(distance(),
+                    html.Div(children=[
+                        html.Div(className='input-group mb3', children=[
+                            html.Div(className='input-group-prepend',
+                            children=[
+                                html.Span(className='input-group-text', children=['Address']),
+                                dcc.Input(id='address',
+                                    className='form-control',
+                                    style={'width': 550},
+                                    value='Hasnerplatz 1, 8010 Graz',
+                                    type='text'),
+                            ])
+                        ]),    
+                        distance()
+                        ],
                         id='page-left', className='col-sm no-gutters'),
                     html.Div(dcc.Graph(id='fig', figure=plot),
                         id='page-right', className='col-sm no-gutters')
