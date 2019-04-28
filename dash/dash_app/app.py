@@ -4,7 +4,7 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from config import config_app
-from layout import app_layout, make_left, make_rigth
+from layout import app_layout, make_left, make_right
 from plots import bar_plot, scatter_plot
 import sys
 from components import make_plot, make_table
@@ -22,7 +22,7 @@ app = config_app(app, debug=True)
 
 # Generate app layoute with 3 div elements: page-header, page-main, page-footer.
 # Content of each div is a function input
-app.layout = app_layout(left=make_left(), right=make_rigth(), footer=None)
+app.layout = app_layout(left=make_left(), right=make_right(), footer=None)
 
 
 @app.callback(Output('memory', 'data'),
@@ -34,19 +34,20 @@ def update_address(address):
 
 @app.callback(Output('sorted-table', 'children'),
              [Input('submit', 'n_clicks'), Input('memory', 'data')])
-def update_left(_, address):
+def update_table(_, address):
     table = make_table(address)
     if table is None:
         return html.Div('Address is wrong')
-    app.server.logger.debug(f"update_left {address}")
+    app.server.logger.debug(f"update_table {address}")
     return table
 
 
-@app.callback(Output('fig', 'children'),
-             [Input('submit', 'n_clicks'), Input('memory', 'data')])
-def update_right(_, address):
+@app.callback(Output('map', 'children'),
+             [Input('submit', 'n_clicks')], 
+             [State('memory', 'data')])
+def update_map(_, address):
     plot = make_plot(address)
-    app.server.logger.debug(f"update_right {address}")
+    app.server.logger.debug(f"update_map {address}")
     return plot
 
 

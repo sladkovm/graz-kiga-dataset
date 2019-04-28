@@ -48,6 +48,8 @@ def make_address(address='Hasnerplatz 1, 8010 Graz'):
 
 
 def make_table(address="Hasnerplatz 1, 8010 Graz"):
+    """Returns dcc.Table()"""
+
     home = geocoder.geocode(address)
     if home is None:
         return None
@@ -56,7 +58,7 @@ def make_table(address="Hasnerplatz 1, 8010 Graz"):
     df['km'] = df.apply(lambda x: np.round(geodesic((x.lat, x.lon), (home.latitude, home.longitude)).km, 2), axis=1)
     df.sort_values(by='km', inplace=True)
     df = df[['name', 'address', 'km']]
-    
+
     rv = dash_table.DataTable(
         id='table',
         row_selectable="single",
@@ -85,6 +87,8 @@ def make_table(address="Hasnerplatz 1, 8010 Graz"):
 
 
 def make_plot(address="Hasnerplatz 1, 8010 Graz"):
+    """Returns dcc.Graph()"""
+
     home = geocoder.geocode(address)
 
     data = [
@@ -167,4 +171,6 @@ def make_plot(address="Hasnerplatz 1, 8010 Graz"):
         )
     )
 
-    return dict(data=data, layout=layout)
+    rv = dcc.Graph(id='graph-map', figure=dict(data=data, layout=layout))
+
+    return rv

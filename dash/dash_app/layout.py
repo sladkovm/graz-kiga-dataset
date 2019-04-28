@@ -15,13 +15,13 @@ def make_left(address=make_address(), table=make_table()):
     return rv
 
 
-def make_rigth(plot=make_plot()):
+def make_right(plot=make_plot()):
     rv = html.Div(id='page-right', 
-            children=[dcc.Graph(id='fig', figure=plot)])
+            children=[html.Div(plot, id='map')])
     return rv
 
 
-def app_layout(left=make_left(), right=make_rigth(), footer=None):
+def app_layout(left=make_left(), right=make_right(), footer=None):
     """Returns app layout with the following elements:
         app-layout: main div, should not be a target of an ouput callback
         page-content: container div, target for an ouput callback
