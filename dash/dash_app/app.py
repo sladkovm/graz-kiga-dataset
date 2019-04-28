@@ -4,10 +4,10 @@ import dash_core_components as dcc
 import dash_html_components as html
 from dash.dependencies import Input, Output, State
 from config import config_app
-from layout import app_layout, make_header, make_main
+from layout import app_layout, make_left, make_rigth
 from plots import bar_plot, scatter_plot
 import sys
-from kiga_map import map_plot, distance
+from components import make_plot, make_table
 
 server = Flask(__name__)
 
@@ -22,37 +22,33 @@ app = config_app(app, debug=True)
 
 # Generate app layoute with 3 div elements: page-header, page-main, page-footer.
 # Content of each div is a function input
-app.layout = app_layout(header=make_header())
+app.layout = app_layout(left=make_left(), right=make_rigth(), footer=None)
 
 
-@app.callback(Output('page-main', 'children'),
-    [Input('url', 'pathname')], [State('address', 'value')])
-def routing(pathname, address):
-    """Very basic router
-
-    This callback function will read the current url
-    and based on pathname value will populate the children of the page-main
-
-    Returns:
-        html.Div
-    """
-    app.server.logger.debug(f"pathname is {pathname}")
-
-    if pathname == '/krippe':
-        rv = make_main(map_plot(address))
-    else:
-        rv = make_main(map_plot(address))
-
-    return rv
+@app.callback(Output('memory', 'data'),
+            [Input('address-input', 'value')])
+def update_address(address):
+    app.server.logger.debug(f"update_address {address}")
+    return address
 
 
-@app.callback(Output('sorted-table', 'children'), [Input('submit', 'n_clicks')],
-    [State('address', 'value')])
-def address(_, address):
-    table = distance(address)
+@app.callback(Output('sorted-table', 'children'),
+             [Input('submit', 'n_clicks'), Input('memory', 'data')])
+def update_left(_, address):
+    table = make_table(address)
     if table is None:
         return html.Div('Address is wrong')
+    app.server.logger.debug(f"update_left {address}")
     return table
+
+
+@app.callback(Output('fig', 'children'),
+             [Input('submit', 'n_clicks'), Input('memory', 'data')])
+def update_right(_, address):
+    plot = make_plot(address)
+    app.server.logger.debug(f"update_right {address}")
+    return plot
+
 
 if __name__ == '__main__':
 

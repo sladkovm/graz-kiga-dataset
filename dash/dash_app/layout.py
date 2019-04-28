@@ -1,26 +1,27 @@
 import dash_core_components as dcc
 import dash_html_components as html
 from style import colors
-from kiga_map import distance
+from components import make_table, make_plot, make_address
 
 
-
-def address():
-    return html.Div(className='input-group mb3', children=[
-                            html.Div(className='input-group-prepend',
-                            children=[
-                                html.Span(className='input-group-text', children=['Address']),
-                                dcc.Input(id='address',
-                                    className='form-control',
-                                    style={'width': 475},
-                                    value='Hasnerplatz 1, 8010 Graz',
-                                    type='text'),
-                                html.Button('Submit', id='submit', className='btn btn-primary')
-                            ])
-                        ])
+def make_left(address=make_address(), table=make_table()):
+    """Returns a div with a plot"""
+    rv = html.Div(id='page-left',
+        className='col-sm no-gutters',
+        children=[
+            html.Div(address, id='address-form'),
+            html.Div(table, id='sorted-table')
+                ])
+    return rv
 
 
-def app_layout(header=None, main=address(), footer=None):
+def make_rigth(plot=make_plot()):
+    rv = html.Div(id='page-right', 
+            children=[dcc.Graph(id='fig', figure=plot)])
+    return rv
+
+
+def app_layout(left=make_left(), right=make_rigth(), footer=None):
     """Returns app layout with the following elements:
         app-layout: main div, should not be a target of an ouput callback
         page-content: container div, target for an ouput callback
@@ -30,73 +31,22 @@ def app_layout(header=None, main=address(), footer=None):
         id='app-layout',
         children=[
             dcc.Location(id='url', refresh=False),
+            dcc.Store(id='memory', data='Hasnerplatz 1, 8010 Graz'),
             html.Div(id='page-content',
-                className = 'container-fluid',
+                className='container-fluid',
                 children=[
-                    html.Div(header, id='page-header'),
-                    html.Div(main, id='page-main'),
-                    html.Div(footer, id='page-footer')
+                    html.Div(id='page row',
+                        className='row no-gutters mt-3',
+                            children=[
+                                html.Div(left, className='col-sm no-gutters',),
+                                html.Div(right, className='col-sm no-gutters',),
+                                html.Div(footer, id='page-footer')
+                                ]
+                            )
+                        ]
+                    )
                 ]
             )
-        ]
-    )
     return rv
 
-
-def make_header():
-    """Returns a div with a header"""
-    rv = html.Nav(
-        className='navbar navbar-expand-md navbar-light bg-light',
-        children = [
-            # Title on the left
-            html.Span(html.A("Dav.ai",
-                             href='/',
-                             className='navbar-brand'),
-                      className='navbar-brand mr-auto w-50'),
-            # Links on the right
-            html.Ul(
-                children = [
-                    html.Li(html.A('Krippe',
-                               href='/Krippe',
-                               className='nav-link lead'
-                            ),
-                            className = 'nav-item'),
-                    html.Li(html.A('Blog',
-                               href='https://sladkovm.github.io/',
-                               className='nav-link lead'
-                            ),
-                            className = 'nav-item'),
-                    html.Li(html.A(
-                                children='Velometria',
-                                href='http://velometria.com',
-                                className = 'nav-link lead'
-                            ),
-                            className = 'nav-pills'),
-                ],
-                className = 'nav navbar-nav ml-auto w-100 justify-content-end'
-            ),
-        ])
-    return rv
-
-
-def make_main(plot=html.Div()):
-    """Returns a div with a plot"""
-    rv = html.Div(
-        style={'backgroundColor': colors['background']},
-        children=[
-            html.Div(id='page-content',
-                className='row no-gutters',
-                children=[
-                    html.Div(children=[
-                        address(),
-                        html.Div(distance(), id='sorted-table')
-                        ],
-                        id='page-left', className='col-sm no-gutters'),
-                    html.Div(dcc.Graph(id='fig', figure=plot),
-                        id='page-right', className='col-sm no-gutters')
-                ]
-            )
-        ]
-    )
-    return rv
 

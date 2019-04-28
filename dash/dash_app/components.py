@@ -6,6 +6,9 @@ from geopy import Nominatim
 from geopy.distance import geodesic
 import dash_table
 import numpy as np
+import dash_html_components as html
+import dash_core_components as dcc
+
 
 geocoder = Nominatim(user_agent='Kiga Graz')
 
@@ -26,7 +29,25 @@ df_privat = pd.DataFrame(krippe_privat)
 df_landmarks = pd.DataFrame(landmarks)
 
 
-def distance(address="Hasnerplatz 1, 8010 Graz"):
+def make_address(address='Hasnerplatz 1, 8010 Graz'):
+    rv =  html.Div(className='input-group mb3',
+        children=[
+            html.Div(className='input-group-prepend',
+            children=[
+                html.Span(className='input-group-text', children=['Address']),
+                dcc.Input(id='address-input',
+                    className='form-control',
+                    style={'width': 475},
+                    value=address,
+                    type='text'),
+                html.Button('Submit', id='submit', className='btn btn-primary')
+            ])
+        ])
+
+    return rv
+
+
+def make_table(address="Hasnerplatz 1, 8010 Graz"):
     home = geocoder.geocode(address)
     if home is None:
         return None
@@ -35,6 +56,7 @@ def distance(address="Hasnerplatz 1, 8010 Graz"):
     df['km'] = df.apply(lambda x: np.round(geodesic((x.lat, x.lon), (home.latitude, home.longitude)).km, 2), axis=1)
     df.sort_values(by='km', inplace=True)
     df = df[['name', 'address', 'km']]
+    
     rv = dash_table.DataTable(
         id='table',
         row_selectable="single",
@@ -62,9 +84,7 @@ def distance(address="Hasnerplatz 1, 8010 Graz"):
     return rv
 
 
-
-
-def map_plot(address="Hasnerplatz 1, 8010 Graz"):
+def make_plot(address="Hasnerplatz 1, 8010 Graz"):
     home = geocoder.geocode(address)
 
     data = [
@@ -121,8 +141,6 @@ def map_plot(address="Hasnerplatz 1, 8010 Graz"):
         )
 
     ]
-
-
 
     layout = go.Layout(
         autosize=True,
