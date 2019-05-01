@@ -31,7 +31,7 @@ def config_app(app, **kwargs):
 
     # Append JS
     app.scripts.append_script({
-        'external_url': 'http://velometria.com/static/ga.js'
+        'external_url': 'http://dav.ai/static/ga.js'
     })
     app.scripts.append_script({
         'external_url': 'https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.min.js'
