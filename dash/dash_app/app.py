@@ -17,6 +17,7 @@ app = dash.Dash(name='Bootstrap_docker_app',
                 static_folder='static',
                 csrf_protect=False,
                 url_base_pathname='/kinder-graz/')
+app.title = "Kinder Graz"
 
 # Add css, js, container div with id='page-content' and location with id='url'
 app = config_app(app, debug=True)
