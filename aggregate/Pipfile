@@ -17,6 +17,7 @@ pandas = "*"
 python-dotenv = "*"
 plotly = "*"
 jsonschema = "*"
+unidecode = "*"
 
 [requires]
 python_version = "3.6"

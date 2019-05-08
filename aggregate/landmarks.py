@@ -8,7 +8,7 @@ lm = [
         "address": "Hauptplatz 1, 8010 Graz"
     },
     {
-        "name": "HBHF",
+        "name": "HBF",
         "address": 'hauptbahnhof, Graz'
     },
     {
@@ -25,7 +25,11 @@ lm = [
     },
     {
         "name": "LKH Graz",
-        'address': "Auenbruggerplatz 1, 8036 Graz"
+        "address": "Auenbruggerplatz 1, 8036 Graz"
+    },
+    {
+        "name": "IKEA",
+        "address": "Weblinger Gurtel 31, 8054 Graz"
     }
 ]   
 

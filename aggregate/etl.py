@@ -5,7 +5,8 @@ import os
 import sys
 from pprint import pprint
 from loguru import logger
-from geopy.geocoders import Nominatim
+from unidecode import unidecode
+from geopy.geocoders import Nominatim, ArcGIS
 
 
 URL_KRIPPE_STAD = 'https://www.graz.at/cms/beitrag/10237730/7745079/Staedtische_Kinderkrippen.html'
@@ -28,6 +29,7 @@ KEYS = {
 
 
 geolocator = Nominatim(user_agent="Kiga Graz")
+arcgis = ArcGIS()
 
 
 def extract():
@@ -82,7 +84,7 @@ def extract_gt(d):
 
 def location(d):
     """Calculate location from the address"""
-    address = d.get('address')
+    address = unidecode(d.get('address'))
     logger.debug(address)
     loc = geolocator.geocode(address)
     logger.debug(loc)
@@ -90,9 +92,17 @@ def location(d):
         d.update({'location': loc.raw})
         d.update({'lat': loc.latitude})
         d.update({'lon': loc.longitude})
-    else:
-        logger.warning(f"Could not find location for {address}")
-        d.update({'location': None})
+        return d
+    
+    loc = arcgis.geocode(address)
+    if loc is not None:
+        d.update({'location': loc.raw})
+        d.update({'lat': loc.latitude})
+        d.update({'lon': loc.longitude})
+        return d
+    
+    logger.warning(f"Could not find location for {address}")
+    d.update({'location': None})
     return d
     
 # Helper functions
@@ -157,12 +167,12 @@ def main():
     # graph = get_graph()
     # bonobo.run(graph)
 
-    # Run kiga stad
-    os.environ['ETL_KEYS'] = 'STAD'
-    os.environ['ETL_URL'] = URL_KIGA_STAD
-    os.environ['ETL_FNAME'] = FILE_KIGA_STAD
-    graph = get_graph()
-    bonobo.run(graph)
+    # # Run kiga stad
+    # os.environ['ETL_KEYS'] = 'STAD'
+    # os.environ['ETL_URL'] = URL_KIGA_STAD
+    # os.environ['ETL_FNAME'] = FILE_KIGA_STAD
+    # graph = get_graph()
+    # bonobo.run(graph)
 
 
 

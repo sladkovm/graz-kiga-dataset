@@ -24,14 +24,22 @@ schema = {
 
 if __name__ == "__main__":
 
-    with open('krippe_privat.json') as f:
+    with open('data/krippe_privat.json') as f:
         kp = json.load(f)
         validate(kp, schema)
 
-    with open('krippe_stad.json') as f:
+    with open('data/krippe_stad.json') as f:
         ks = json.load(f)
         validate(ks, schema)
 
-    with open('landmarks.json') as f:
+    with open('data/kiga_privat.json') as f:
+        kp = json.load(f)
+        validate(kp, schema)
+
+    with open('data/kiga_stad.json') as f:
+        ks = json.load(f)
+        validate(ks, schema)
+
+    with open('data/landmarks.json') as f:
         ks = json.load(f)
         validate(ks, schema)
