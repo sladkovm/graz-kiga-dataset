@@ -2,6 +2,7 @@ import bonobo
 from requests_html import HTMLSession
 import re
 import os
+import sys
 from pprint import pprint
 from loguru import logger
 from geopy.geocoders import Nominatim
@@ -45,7 +46,6 @@ def extract():
 def to_text(e):
     """Converts html el to text"""
     t = e.text
-    bonobo.PrettyPrinter(t)
     logger.debug(t)
     yield t
         
@@ -108,7 +108,11 @@ def n_gt(text):
     """Extract number of GT groups"""
     reg = r"(\d+) (?=GT)"
     res = re.findall(reg, text)
-    return int(res[0])
+    logger.debug(res)
+    if res == []:
+        return 0
+    else:
+        return int(res[0])
 
 
 def get_graph():
@@ -128,6 +132,9 @@ def get_graph():
 
 
 def main():
+
+    logger.remove(0)
+    logger.add(sys.stderr, level="INFO")
 
     # # Run krippe privat
     # os.environ['ETL_KEYS'] = 'PRIVAT'
