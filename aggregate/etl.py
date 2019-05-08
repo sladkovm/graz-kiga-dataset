@@ -13,6 +13,13 @@ FILE_KRIPPE_STAD = 'data/krippe_stad.json'
 URL_KRIPPE_PRIVAT = 'https://www.graz.at/cms/beitrag/10238994/7745114/Private_Kinderkrippen.html'
 FILE_KRIPPE_PRIVAT = 'data/krippe_privat.json'
 
+URL_KIGA_STAD = 'https://www.graz.at/cms/beitrag/10237817/7745175/Kindergaerten_der_Stadt_Graz.html'
+FILE_KIGA_STAD = 'data/kiga_stad.json'
+
+URL_KIGA_PRIVAT = 'https://www.graz.at/cms/beitrag/10239003/7745240/Private_Kindergaerten.html'
+FILE_KIGA_PRIVAT = 'data/kiga_privat.json'
+
+
 KEYS = {
     'STAD': ['district', 'name', 'address', 'tel', 'n_groups', 'time', 'more'],
     'PRIVAT': ['district', 'name', 'address', 'tel', 'time']
@@ -38,12 +45,19 @@ def extract():
 def to_text(e):
     """Converts html el to text"""
     t = e.text
+    bonobo.PrettyPrinter(t)
+    logger.debug(t)
     yield t
         
 
 def split_lines(t):
     lines = t.split('\n')
     if is_roman(lines[0]):
+        sub_lines = lines[0].split(' - ')
+        if len(sub_lines) == 2:
+            del lines[0]
+            lines = sub_lines + lines
+        logger.debug(lines)
         yield lines
         
 
@@ -61,6 +75,7 @@ def jsonify(lines):
 def extract_gt(d):
     """Extract the number of Ganze Tag groups"""
     if d.get('n_groups', None):
+        logger.debug(d.get('n_groups', None))
         d.update({'GT': n_gt(d['n_groups'])})
     yield d
     
@@ -114,17 +129,31 @@ def get_graph():
 
 def main():
 
-    # Run krippe privat
-    os.environ['ETL_KEYS'] = 'PRIVAT'
-    os.environ['ETL_URL'] = URL_KRIPPE_PRIVAT
-    os.environ['ETL_FNAME'] = FILE_KRIPPE_PRIVAT
-    graph = get_graph()
-    bonobo.run(graph)
+    # # Run krippe privat
+    # os.environ['ETL_KEYS'] = 'PRIVAT'
+    # os.environ['ETL_URL'] = URL_KRIPPE_PRIVAT
+    # os.environ['ETL_FNAME'] = FILE_KRIPPE_PRIVAT
+    # graph = get_graph()
+    # bonobo.run(graph)
 
-    # Run krippe stad
+    # # Run krippe stad
+    # os.environ['ETL_KEYS'] = 'STAD'
+    # os.environ['ETL_URL'] = URL_KRIPPE_STAD
+    # os.environ['ETL_FNAME'] = FILE_KRIPPE_STAD
+    # graph = get_graph()
+    # bonobo.run(graph)
+
+    # # Run kiga privat
+    # os.environ['ETL_KEYS'] = 'PRIVAT'
+    # os.environ['ETL_URL'] = URL_KIGA_PRIVAT
+    # os.environ['ETL_FNAME'] = FILE_KIGA_PRIVAT
+    # graph = get_graph()
+    # bonobo.run(graph)
+
+    # Run kiga stad
     os.environ['ETL_KEYS'] = 'STAD'
-    os.environ['ETL_URL'] = URL_KRIPPE_STAD
-    os.environ['ETL_FNAME'] = FILE_KRIPPE_STAD
+    os.environ['ETL_URL'] = URL_KIGA_STAD
+    os.environ['ETL_FNAME'] = FILE_KIGA_STAD
     graph = get_graph()
     bonobo.run(graph)
 
