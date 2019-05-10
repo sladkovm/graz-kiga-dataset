@@ -126,11 +126,12 @@ def make_plot(address="Hasnerplatz 1, 8010 Graz"):
             textposition="bottom center",
             marker=go.scattermapbox.Marker(
                 size=10,
-                color='red'
+                color='black',
+                symbol='attraction'
             ),
             text=df_landmarks.name,
             hoverinfo='text',
-            textfont=dict(color='red')
+            textfont=dict(color='black')
         ),
 
         go.Scattermapbox(
@@ -141,11 +142,12 @@ def make_plot(address="Hasnerplatz 1, 8010 Graz"):
             textposition="bottom center",
             marker=go.scattermapbox.Marker(
                 size=10,
-                color='orange'
+                color='red',
+                symbol="castle"
             ),
             text=['Home'],
             hoverinfo='text',
-            textfont=dict(color='orange')
+            textfont=dict(color='red')
         )
 
     ]
